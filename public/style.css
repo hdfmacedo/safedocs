@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 2em;
+    margin: 0;
 }
 body.dark {
     background-color: #333;
@@ -9,3 +9,34 @@ body.dark {
 a { color: #00f; }
 body.dark a { color: #8cf; }
 form { margin-bottom: 1em; }
+
+.login-container {
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+body.dark .login-container {
+    background: #444;
+    border-color: #666;
+}
+
+.layout { display: flex; min-height: 100vh; }
+.menu {
+    width: 200px;
+    background: #f0f0f0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+body.dark .menu { background: #222; }
+.menu ul { list-style: none; padding: 0; flex-grow: 1; }
+.menu ul li { margin-bottom: 1em; }
+.menu .bottom { margin-top: auto; }
+.content { flex-grow: 1; padding: 20px; }
+
+table { border-collapse: collapse; width: 100%; }
+td, th { border: 1px solid #ccc; padding: 0.5em; }
+body.dark td, body.dark th { border-color: #555; }

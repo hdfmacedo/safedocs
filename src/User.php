@@ -49,5 +49,21 @@ class User {
         }
         return false;
     }
+
+    public static function all() {
+        $db = Database::getConnection();
+        $stmt = sqlsrv_query($db, 'SELECT id, username, type FROM users');
+        $users = [];
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $users[] = $row;
+        }
+        return $users;
+    }
+
+    public static function updateType($id, $type) {
+        $db = Database::getConnection();
+        $stmt = sqlsrv_query($db, 'UPDATE users SET type = ? WHERE id = ?', [$type, $id]);
+        return $stmt !== false;
+    }
 }
 ?>
