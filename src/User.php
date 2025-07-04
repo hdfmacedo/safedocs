@@ -9,37 +9,43 @@ class User {
 
     public static function init() {
         $db = Database::getConnection();
-        $db->exec("CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE,
-            password TEXT,
-            type TEXT
-        )");
+
+        $stmt = sqlsrv_query($db, "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'users'");
+        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_NUMERIC);
+        if ($row[0] == 0) {
+            $sql = "CREATE TABLE users (
+                id INT IDENTITY(1,1) PRIMARY KEY,
+                username NVARCHAR(255) UNIQUE,
+                password NVARCHAR(255),
+                type NVARCHAR(50)
+            )";
+            sqlsrv_query($db, $sql);
+        }
 
         // Create admin if not exists
-        $stmt = $db->prepare('SELECT COUNT(*) FROM users WHERE username = ?');
-        $stmt->execute(['admin']);
-        if ($stmt->fetchColumn() == 0) {
+        $stmt = sqlsrv_query($db, 'SELECT COUNT(*) FROM users WHERE username = ?', ['admin']);
+        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_NUMERIC);
+        if ($row[0] == 0) {
             $hash = password_hash('admin', PASSWORD_DEFAULT);
-            $stmt = $db->prepare('INSERT INTO users (username, password, type) VALUES (?, ?, ?)');
-            $stmt->execute(['admin', $hash, 'Admin']);
+            sqlsrv_query($db, 'INSERT INTO users (username, password, type) VALUES (?, ?, ?)', ['admin', $hash, 'Admin']);
             Logger::info('system', 'init', 'Created default admin user');
         }
     }
 
     public static function register($username, $password) {
         $db = Database::getConnection();
-        $stmt = $db->prepare('INSERT INTO users (username, password, type) VALUES (?, ?, ?)');
-        return $stmt->execute([$username, password_hash($password, PASSWORD_DEFAULT), 'User']);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = sqlsrv_query($db, 'INSERT INTO users (username, password, type) VALUES (?, ?, ?)', [$username, $hash, 'User']);
+        return $stmt !== false;
     }
 
     public static function authenticate($username, $password) {
         $db = Database::getConnection();
-        $stmt = $db->prepare('SELECT * FROM users WHERE username = ?');
-        $stmt->execute([$username]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($user && password_verify($password, $user['password'])) {
-            return $user;
+        $stmt = sqlsrv_query($db, 'SELECT * FROM users WHERE username = ?', [$username]);
+        if ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            if (password_verify($password, $row['password'])) {
+                return $row;
+            }
         }
         return false;
     }
