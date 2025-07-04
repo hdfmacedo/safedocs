@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../src/Common.php';
 require_once __DIR__ . '/../src/Auth.php';
 Auth::start();
 User::init();

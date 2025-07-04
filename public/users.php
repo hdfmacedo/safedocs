@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../src/Common.php';
 require_once __DIR__ . '/../src/Auth.php';
 Auth::start();
 User::init();
@@ -44,18 +45,34 @@ $dark = isset($_COOKIE['dark']) ? 'dark' : '';
         </ul>
         <div class="bottom">
             <button onclick="location.href='index.php?logout=1'">Logout</button>
-            <button id="dark-toggle" class="toggle"><span class="sun">☀</span><span class="moon">🌙</span><span class="knob"></span></button>
+            <button id="dark-toggle" class="toggle"><span class="sun">â</span><span class="moon">ð</span><span class="knob"></span></button>
         </div>
     </nav>
     <main class="content">
         <h1>Usuários</h1>
         <table>
-            <tr><th>Nome</th><th>Tipo</th><th>Último Login</th><th>Ação</th></tr>
+            <tr><th>Nome</th><th>Tipo</th><th>Last login</th><th>Actions</th></tr>
             <?php foreach ($users as $u): ?>
             <tr>
                 <td><?php echo htmlspecialchars($u['username']); ?></td>
                 <td><?php echo htmlspecialchars($u['type']); ?></td>
-                <td><?php echo htmlspecialchars($u['last_login'] ? date('Y-m-d H:i', strtotime($u['last_login'])) : ''); ?></td>
+                <td><?php 
+                    if ($u['last_login']) {
+                        echo $u['last_login']->format('d/m/Y H:i:s');
+                        $daysAgo = '';
+                        $diff = (new DateTime())->diff($u['last_login']);
+                        if ($diff->days > 0) {
+                            $daysAgo = ' (' . $diff->days . ' days ago)';
+                        } else if ($diff->h > 0) {
+                            $daysAgo = ' (' . $diff->h . ' hours ago)';
+                        } else if ($diff->i > 0) {
+                            $daysAgo = ' (' . $diff->i . ' minutes ago)';
+                        }
+                        echo $daysAgo;
+                    } else {
+                        echo 'Never';
+                    }
+                ?></td>
                 <td>
                     <form method="post" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $u['id']; ?>">
