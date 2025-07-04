@@ -22,6 +22,7 @@ class Auth {
                 'username' => $user['username'],
                 'type' => $user['type']
             ];
+            User::recordLogin($user['id']);
             Logger::info($user['username'], 'login', 'User logged in');
             return true;
         }

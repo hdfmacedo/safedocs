@@ -34,21 +34,28 @@ $dark = isset($_COOKIE['dark']) ? 'dark' : '';
     <nav class="menu">
         <ul>
             <li><a href="index.php">Início</a></li>
-            <li><strong>Usuários</strong></li>
+            <li>Admin
+                <ul>
+                    <li><strong>Usuários</strong></li>
+                    <li><a href="product_lines.php">Linhas de Produto</a></li>
+                </ul>
+            </li>
+            <li><a href="change_password.php">Trocar Senha</a></li>
         </ul>
         <div class="bottom">
             <button onclick="location.href='index.php?logout=1'">Logout</button>
-            <button id="dark-toggle">Darkmode</button>
+            <button id="dark-toggle" class="toggle"><span class="sun">☀</span><span class="moon">🌙</span><span class="knob"></span></button>
         </div>
     </nav>
     <main class="content">
         <h1>Usuários</h1>
         <table>
-            <tr><th>Nome</th><th>Tipo</th><th>Ação</th></tr>
+            <tr><th>Nome</th><th>Tipo</th><th>Último Login</th><th>Ação</th></tr>
             <?php foreach ($users as $u): ?>
             <tr>
                 <td><?php echo htmlspecialchars($u['username']); ?></td>
                 <td><?php echo htmlspecialchars($u['type']); ?></td>
+                <td><?php echo htmlspecialchars($u['last_login'] ? date('Y-m-d H:i', strtotime($u['last_login'])) : ''); ?></td>
                 <td>
                     <form method="post" style="display:inline;">
                         <input type="hidden" name="id" value="<?php echo $u['id']; ?>">

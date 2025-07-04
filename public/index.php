@@ -46,12 +46,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$user) {
         <ul>
             <li><a href="index.php">Início</a></li>
             <?php if ($user['type'] === 'Admin'): ?>
-            <li><a href="users.php">Usuários</a></li>
+            <li>Admin
+                <ul>
+                    <li><a href="users.php">Usuários</a></li>
+                    <li><a href="product_lines.php">Linhas de Produto</a></li>
+                </ul>
+            </li>
             <?php endif; ?>
+            <li><a href="change_password.php">Trocar Senha</a></li>
         </ul>
         <div class="bottom">
             <button onclick="location.href='?logout=1'">Logout</button>
-            <button id="dark-toggle">Darkmode</button>
+            <button id="dark-toggle" class="toggle">
+                <span class="sun">☀</span>
+                <span class="moon">🌙</span>
+                <span class="knob"></span>
+            </button>
         </div>
     </nav>
     <main class="content">
