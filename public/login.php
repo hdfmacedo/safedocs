@@ -30,17 +30,6 @@ $dark = isset($_COOKIE['dark']) ? 'dark' : '';
 <button type="submit">Login</button>
 </form>
 <p><a href="register.php">Register</a></p>
-<p><a href="readme.php">View README</a></p>
-<p><a href="?dark=toggle">Toggle dark mode</a></p>
-<?php
-if (isset($_GET['dark']) && $_GET['dark'] === 'toggle') {
-    if (isset($_COOKIE['dark'])) {
-        setcookie('dark', '', time()-3600);
-    } else {
-        setcookie('dark', '1', time()+3600*24*30);
-    }
-    header('Location: login.php');
-}
-?>
+<script src="toggle.js"></script>
 </body>
 </html>
