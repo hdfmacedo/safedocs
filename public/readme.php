@@ -4,7 +4,8 @@ Auth::start();
 User::init();
 $user = Auth::user();
 $dark = isset($_COOKIE['dark']) ? 'dark' : '';
-$readme = file_get_contents(__DIR__ . '/../README.md');
+$path = __DIR__ . '/../README.md';
+$readme = file_exists($path) ? file_get_contents($path) : 'README not available.';
 Logger::info($user['username'] ?? 'guest', 'readme', 'Viewed README');
 ?>
 <!DOCTYPE html>

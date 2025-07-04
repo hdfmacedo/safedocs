@@ -1,17 +1,23 @@
 <?php
 class Database {
-    private static $pdo;
+    private static $conn;
 
     public static function getConnection() {
-        if (!self::$pdo) {
+        if (!self::$conn) {
             $config = parse_ini_file(__DIR__ . '/../conf.env');
-            $dsn = $config['DSN'] ?? '';
-            $user = $config['DB_USER'] ?? '';
-            $pass = $config['DB_PASS'] ?? '';
-            self::$pdo = new PDO($dsn, $user, $pass);
-            self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $server = $config['SERVER'] ?? 'localhost';
+            $info = [
+                'Database' => $config['DATABASE'] ?? 'safedocs',
+                'UID' => $config['DB_USER'] ?? '',
+                'PWD' => $config['DB_PASS'] ?? '',
+                'CharacterSet' => 'UTF-8'
+            ];
+            self::$conn = sqlsrv_connect($server, $info);
+            if (!self::$conn) {
+                throw new Exception(print_r(sqlsrv_errors(), true));
+            }
         }
-        return self::$pdo;
+        return self::$conn;
     }
 }
 ?>
