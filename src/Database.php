@@ -5,6 +5,11 @@ class Database {
     public static function getConnection() {
         if (!self::$conn) {
             $config = parse_ini_file(__DIR__ . '/../conf.env');
+            foreach($config as $c => $v) {
+                if (is_string($v)) {
+                    $config[$c] = trim($v);
+                }
+            }
             $server = $config['SERVER'] ?? 'localhost';
             $info = [
                 'Database' => $config['DATABASE'] ?? 'safedocs',
