@@ -19,16 +19,7 @@ Logger::info($user['username'] ?? 'guest', 'readme', 'Viewed README');
 <h1>README</h1>
 <pre><?php echo htmlspecialchars($readme); ?></pre>
 <p><a href="index.php">Back</a></p>
-<p><a href="?dark=toggle">Toggle dark mode</a></p>
-<?php
-if (isset($_GET['dark']) && $_GET['dark'] === 'toggle') {
-    if (isset($_COOKIE['dark'])) {
-        setcookie('dark', '', time()-3600);
-    } else {
-        setcookie('dark', '1', time()+3600*24*30);
-    }
-    header('Location: readme.php');
-}
-?>
+<button id="dark-toggle" class="toggle-switch"><span class="light">☀</span><span class="dark">🌙</span></button>
+<script src="toggle.js"></script>
 </body>
 </html>

@@ -40,3 +40,13 @@ body.dark .menu { background: #222; }
 table { border-collapse: collapse; width: 100%; }
 td, th { border: 1px solid #ccc; padding: 0.5em; }
 body.dark td, body.dark th { border-color: #555; }
+
+.toggle-switch {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+.toggle-switch .dark { display: none; }
+body.dark .toggle-switch .dark { display: inline; }
+body.dark .toggle-switch .light { display: none; }

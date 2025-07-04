@@ -17,9 +17,16 @@ class User {
                 id INT IDENTITY(1,1) PRIMARY KEY,
                 username NVARCHAR(255) UNIQUE,
                 password NVARCHAR(255),
-                type NVARCHAR(50)
+                type NVARCHAR(50),
+                last_login DATETIME NULL
             )";
             sqlsrv_query($db, $sql);
+        }
+
+        $stmt = sqlsrv_query($db, "SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'users' AND COLUMN_NAME = 'last_login'");
+        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_NUMERIC);
+        if ($row[0] == 0) {
+            sqlsrv_query($db, "ALTER TABLE users ADD last_login DATETIME NULL");
         }
 
         // Create admin if not exists
@@ -63,6 +70,19 @@ class User {
     public static function updateType($id, $type) {
         $db = Database::getConnection();
         $stmt = sqlsrv_query($db, 'UPDATE users SET type = ? WHERE id = ?', [$type, $id]);
+        return $stmt !== false;
+    }
+
+    public static function updatePassword($id, $password) {
+        $db = Database::getConnection();
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        $stmt = sqlsrv_query($db, 'UPDATE users SET password = ? WHERE id = ?', [$hash, $id]);
+        return $stmt !== false;
+    }
+
+    public static function setLastLogin($id) {
+        $db = Database::getConnection();
+        $stmt = sqlsrv_query($db, 'UPDATE users SET last_login = GETDATE() WHERE id = ?', [$id]);
         return $stmt !== false;
     }
 }

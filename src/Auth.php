@@ -22,6 +22,7 @@ class Auth {
                 'username' => $user['username'],
                 'type' => $user['type']
             ];
+            User::setLastLogin($user['id']);
             Logger::info($user['username'], 'login', 'User logged in');
             return true;
         }

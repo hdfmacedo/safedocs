@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$user) {
         <button type="submit">Entrar</button>
     </form>
     <p class="link"><a href="register.php">Cadastre-se</a></p>
+    <button id="dark-toggle" class="toggle-switch"><span class="light">☀</span><span class="dark">🌙</span></button>
 </div>
 <?php else: ?>
 <div class="layout">
@@ -48,10 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$user) {
             <?php if ($user['type'] === 'Admin'): ?>
             <li><a href="users.php">Usuários</a></li>
             <?php endif; ?>
+            <li><a href="change_password.php">Trocar Senha</a></li>
         </ul>
         <div class="bottom">
             <button onclick="location.href='?logout=1'">Logout</button>
-            <button id="dark-toggle">Darkmode</button>
+            <button id="dark-toggle" class="toggle-switch"><span class="light">☀</span><span class="dark">🌙</span></button>
         </div>
     </nav>
     <main class="content">

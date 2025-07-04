@@ -35,10 +35,11 @@ $dark = isset($_COOKIE['dark']) ? 'dark' : '';
         <ul>
             <li><a href="index.php">Início</a></li>
             <li><strong>Usuários</strong></li>
+            <li><a href="change_password.php">Trocar Senha</a></li>
         </ul>
         <div class="bottom">
             <button onclick="location.href='index.php?logout=1'">Logout</button>
-            <button id="dark-toggle">Darkmode</button>
+            <button id="dark-toggle" class="toggle-switch"><span class="light">☀</span><span class="dark">🌙</span></button>
         </div>
     </nav>
     <main class="content">
