@@ -7,7 +7,7 @@ $err = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (User::register($_POST['username'], $_POST['password'])) {
         Logger::info($_POST['username'], 'register', 'User registered');
-        header('Location: login.php');
+        header('Location: index.php');
         exit;
     } else {
         $err = 'Failed to register';
@@ -30,7 +30,7 @@ $dark = isset($_COOKIE['dark']) ? 'dark' : '';
 <label>Password: <input type="password" name="password"></label><br>
 <button type="submit">Register</button>
 </form>
-<p><a href="login.php">Login</a></p>
+<p><a href="index.php">Login</a></p>
 <script src="toggle.js"></script>
 </body>
 </html>
