@@ -1,38 +1,7 @@
 <?php
-require_once __DIR__ . '/../src/Common.php';
-require_once __DIR__ . '/../src/Auth.php';
+require_once __DIR__ . '/../src/controllers/RegisterController.php';
 Auth::start();
 User::init();
-
-$err = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (User::register($_POST['username'], $_POST['password'])) {
-        Logger::info($_POST['username'], 'register', 'User registered');
-        header('Location: index.php');
-        exit;
-    } else {
-        $err = 'Failed to register';
-    }
-}
-$dark = isset($_COOKIE['dark']) ? 'dark' : '';
+$controller = new RegisterController();
+$controller->register();
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="style.css">
-<title>Register</title>
-</head>
-<body class="<?php echo $dark; ?>">
-<h1>Register</h1>
-<?php if ($err) echo "<p style='color:red;'>$err</p>"; ?>
-<form method="post">
-<label>User: <input type="text" name="username"></label><br>
-<label>Password: <input type="password" name="password"></label><br>
-<button type="submit">Register</button>
-</form>
-<p><a href="index.php">Login</a></p>
-<button id="dark-toggle" class="toggle"><span class="sun">☀</span><span class="moon">🌙</span><span class="knob"></span></button>
-<script src="toggle.js"></script>
-</body>
-</html>

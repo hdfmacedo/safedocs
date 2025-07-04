@@ -13,3 +13,8 @@ Sistema simples em PHP para controle de usuários.
 - Todas as ações geram logs em `storage/app.log`
 
 Configure o acesso ao banco de dados em `conf.env`.
+
+## Estrutura MVC
+O código agora segue o padrão MVC. Os controladores ficam em `src/controllers`, as
+views em `src/views` e os modelos continuam em `src`. O menu foi isolado em
+`src/views/partials/menu.php`, facilitando a manutenção.
