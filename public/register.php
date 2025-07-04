@@ -31,6 +31,7 @@ $dark = isset($_COOKIE['dark']) ? 'dark' : '';
 <button type="submit">Register</button>
 </form>
 <p><a href="index.php">Login</a></p>
+<button id="dark-toggle" class="toggle"><span class="sun">☀</span><span class="moon">🌙</span><span class="knob"></span></button>
 <script src="toggle.js"></script>
 </body>
 </html>
