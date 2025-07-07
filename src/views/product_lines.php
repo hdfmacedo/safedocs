@@ -3,7 +3,7 @@
 <form method="post">
     <label>Nome:<br><input type="text" name="name" required></label><br>
     <label>Descrição:<br><textarea name="description" rows="3" cols="40" required></textarea></label><br>
-    <button type="submit">Adicionar</button>
+    <button class="btn" type="submit">Adicionar</button>
 </form>
 <h2>Existentes</h2>
 <table>
@@ -17,7 +17,7 @@
                 <input type="hidden" name="id" value="<?php echo $l['id']; ?>">
                 <input type="text" name="name" value="<?php echo htmlspecialchars($l['name']); ?>" required>
                 <textarea name="description" rows="2" cols="20" required><?php echo htmlspecialchars($l['description']); ?></textarea>
-                <button type="submit">Salvar</button>
+                <button class="btn" type="submit">Salvar</button>
             </form>
         </td>
     </tr>
