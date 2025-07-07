@@ -1,10 +1,19 @@
 <h1>Usuários</h1>
 <table>
-    <tr><th>Nome</th><th>Tipo</th><th>Last login</th><th>Actions</th></tr>
+    <tr><th>Nome</th><th>Tipo</th><th>Last login</th><th>Ações</th></tr>
     <?php foreach ($users as $u): ?>
-    <tr>
-        <td><?php echo htmlspecialchars($u['username']); ?></td>
-        <td><?php echo htmlspecialchars($u['type']); ?></td>
+    <?php $formId = 'user-form-' . $u['id']; ?>
+    <tr data-id="<?php echo $u['id']; ?>">
+        <td>
+            <span class="view"><?php echo htmlspecialchars($u['username']); ?></span>
+        </td>
+        <td>
+            <span class="view"><?php echo htmlspecialchars($u['type']); ?></span>
+            <select form="<?php echo $formId; ?>" name="type" class="edit-input" style="display:none;">
+                <option value="User" <?php if ($u['type']==='User') echo 'selected'; ?>>User</option>
+                <option value="Admin" <?php if ($u['type']==='Admin') echo 'selected'; ?>>Admin</option>
+            </select>
+        </td>
         <td><?php
             if ($u['last_login']) {
                 echo $u['last_login']->format('d/m/Y H:i:s');
@@ -21,14 +30,14 @@
             }
         ?></td>
         <td>
-            <form method="post" style="display:inline;">
+            <form id="<?php echo $formId; ?>" method="post" style="display:none;">
                 <input type="hidden" name="id" value="<?php echo $u['id']; ?>">
-                <select name="type">
-                    <option value="User" <?php if ($u['type']==='User') echo 'selected'; ?>>User</option>
-                    <option value="Admin" <?php if ($u['type']==='Admin') echo 'selected'; ?>>Admin</option>
-                </select>
-                <button class="btn" type="submit">Salvar</button>
             </form>
+            <button type="button" class="btn edit-btn">Editar</button>
+            <span class="edit-buttons" style="display:none;">
+                <button form="<?php echo $formId; ?>" class="btn save-btn" type="submit">Salvar</button>
+                <button type="button" class="btn cancel-btn">Cancelar</button>
+            </span>
         </td>
     </tr>
     <?php endforeach; ?>

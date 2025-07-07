@@ -17,5 +17,6 @@
 <?= $content ?>
 <?php endif; ?>
 <script src="toggle.js"></script>
+<script src="edit.js"></script>
 </body>
 </html>
