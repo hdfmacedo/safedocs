@@ -5,7 +5,7 @@
     <form method="post">
         <label>Usuário:<br><input type="text" name="username" required></label><br>
         <label>Senha:<br><input type="password" name="password" required></label><br>
-        <button type="submit">Entrar</button>
+        <button class="btn" type="submit">Entrar</button>
     </form>
     <p class="link"><a href="register.php">Cadastre-se</a></p>
 </div>

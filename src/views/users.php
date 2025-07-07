@@ -27,7 +27,7 @@
                     <option value="User" <?php if ($u['type']==='User') echo 'selected'; ?>>User</option>
                     <option value="Admin" <?php if ($u['type']==='Admin') echo 'selected'; ?>>Admin</option>
                 </select>
-                <button type="submit">Salvar</button>
+                <button class="btn" type="submit">Salvar</button>
             </form>
         </td>
     </tr>

@@ -3,5 +3,5 @@
 <form method="post">
     <label>Senha Atual:<br><input type="password" name="old_password" required></label><br>
     <label>Nova Senha:<br><input type="password" name="new_password" required></label><br>
-    <button type="submit">Salvar</button>
+    <button class="btn" type="submit">Salvar</button>
 </form>
