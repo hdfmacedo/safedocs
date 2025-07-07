@@ -7,18 +7,27 @@
 </form>
 <h2>Existentes</h2>
 <table>
-    <tr><th>Nome</th><th>Descrição</th><th>Ação</th></tr>
+    <tr><th>Nome</th><th>Descrição</th><th>Ações</th></tr>
     <?php foreach ($lines as $l): ?>
-    <tr>
-        <td><?php echo htmlspecialchars($l['name']); ?></td>
-        <td><?php echo htmlspecialchars($l['description']); ?></td>
+    <?php $formId = 'line-form-' . $l['id']; ?>
+    <tr data-id="<?php echo $l['id']; ?>">
         <td>
-            <form method="post" style="display:inline;">
+            <span class="view"><?php echo htmlspecialchars($l['name']); ?></span>
+            <input form="<?php echo $formId; ?>" type="text" name="name" value="<?php echo htmlspecialchars($l['name']); ?>" class="edit-input" style="display:none;" required>
+        </td>
+        <td>
+            <span class="view"><?php echo htmlspecialchars($l['description']); ?></span>
+            <textarea form="<?php echo $formId; ?>" name="description" rows="2" cols="20" class="edit-input" style="display:none;" required><?php echo htmlspecialchars($l['description']); ?></textarea>
+        </td>
+        <td>
+            <form id="<?php echo $formId; ?>" method="post" style="display:none;">
                 <input type="hidden" name="id" value="<?php echo $l['id']; ?>">
-                <input type="text" name="name" value="<?php echo htmlspecialchars($l['name']); ?>" required>
-                <textarea name="description" rows="2" cols="20" required><?php echo htmlspecialchars($l['description']); ?></textarea>
-                <button class="btn" type="submit">Salvar</button>
             </form>
+            <button type="button" class="btn edit-btn">Editar</button>
+            <span class="edit-buttons" style="display:none;">
+                <button form="<?php echo $formId; ?>" class="btn save-btn" type="submit">Salvar</button>
+                <button type="button" class="btn cancel-btn">Cancelar</button>
+            </span>
         </td>
     </tr>
     <?php endforeach; ?>
